@@ -1,0 +1,17 @@
+/**
+ * @file	cstddef
+ * @author	boy
+ * @version 
+ * @date	05 θώνÿ 2015 γ.
+ * @brief
+ */
+#ifndef CSTDDEF_
+#define CSTDDEF_
+
+namespace std {
+
+typedef decltype(nullptr) nullptr_t;
+
+}
+
+#endif /* CSTDDEF_ */

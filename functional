@@ -1,0 +1,86 @@
+/**
+ * @file	functional.h
+ * @author	boy
+ * @version 
+ * @date	01 θώνÿ 2015 γ.
+ * @brief
+ */
+#ifndef FUNCTIONAL_
+#define FUNCTIONAL_
+
+#include <cstddef>
+
+#include <terminate.h>
+
+namespace std {
+
+template<typename ... Args> class function;
+template <class Ret, class... Args>
+class function <Ret(Args...)> {
+	typedef Ret (*FunctorType) (Args...);
+	typedef Ret (*ObjFunctorType) (void*, Args...);
+public:
+	function() {};
+	function(std::nullptr_t fn) {
+		function_ptr_ = nullptr;
+		obj_ptr_ = nullptr;
+	};
+	function(FunctorType f_ptr) {
+		function_ptr_ = f_ptr;
+	};
+	function(FunctorType f_ptr, void* obj_ptr) {
+		function_ptr_ = f_ptr;
+		obj_ptr_ = obj_ptr;
+	};
+	~function() {};
+
+	function& operator= (std::nullptr_t fn) {
+		function_ptr_ = nullptr;
+		obj_ptr_ = nullptr;
+
+		return *this;
+	};
+
+	Ret operator()(Args... args) {
+		if (function_ptr_ == nullptr)
+			terminate();
+
+		if (obj_ptr_ != nullptr) {
+			return (reinterpret_cast<ObjFunctorType>(function_ptr_))(obj_ptr_, args...);
+		}
+
+		return function_ptr_(args...);
+	};
+
+	operator bool() const {
+		if (function_ptr_ == nullptr)
+			return false;
+		else
+			return true;
+	};
+
+private:
+
+	FunctorType function_ptr_ = nullptr;
+	void* obj_ptr_ = nullptr;
+};
+
+template <class ObjT, class Ret, class... Args>
+function<Ret(Args...)> bind (Ret (ObjT::* fn)(Args...), ObjT* obj_ptr) {
+
+	function<Ret(Args...)> func(reinterpret_cast<Ret (*)(Args...)>(fn), obj_ptr);
+
+	return func;
+};
+
+template <class Ret, class... Args>
+function<Ret(Args...)> bind (Ret (* fn)(Args...)) {
+
+	function<Ret(Args...)> func(reinterpret_cast<Ret (*)(Args...)>(fn));
+
+	return func;
+};
+
+} /* namespace std */
+
+#endif /* FUNCTIONAL_ */

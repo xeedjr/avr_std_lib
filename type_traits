@@ -1,0 +1,19 @@
+/**
+ * @file	type_traits
+ * @author	boy
+ * @version 
+ * @date	07 θώνÿ 2015 γ.
+ * @brief
+ */
+#ifndef TYPE_TRAITS_
+#define TYPE_TRAITS_
+
+namespace std {
+
+template< class T > struct remove_reference      {typedef T type;};
+template< class T > struct remove_reference<T&>  {typedef T type;};
+template< class T > struct remove_reference<T&&> {typedef T type;};
+
+}
+
+#endif /* TYPE_TRAITS_ */

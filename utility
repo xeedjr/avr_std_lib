@@ -1,0 +1,25 @@
+/**
+ * @file	utility
+ * @author	boy
+ * @version 
+ * @date	07 θώνÿ 2015 γ.
+ * @brief
+ */
+#ifndef UTILITY_
+#define UTILITY_
+
+#include <type_traits>
+
+namespace std {
+
+template<class T>
+typename remove_reference<T>::type&&
+move(T&& a) noexcept
+{
+	typedef typename remove_reference<T>::type&& RvalRef;
+	return static_cast<RvalRef>(a);
+}
+
+}
+
+#endif /* UTILITY_ */
