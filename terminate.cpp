@@ -8,6 +8,11 @@
 
 #include <stdlib.h>
 
+extern "C" void __cxa_pure_virtual()
+{
+	while (true) {}
+}
+
 void terminate() {
 	while(1){}
 	abort();
