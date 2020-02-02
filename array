@@ -5,8 +5,7 @@
  * @date	07 окт. 2014 г.
  * @brief
  */
-#ifndef SUNERGIJA_DS_CPP_SRC_UTILS_ARRAY_H_
-#define SUNERGIJA_DS_CPP_SRC_UTILS_ARRAY_H_
+#pragma once
 
 #include <stdint.h>
 #include <stddef.h>
@@ -25,6 +24,10 @@ public:
 	};
 	~array()
 	{};
+
+	T at(int index) {
+		return array_[index];
+	}
 
 	void push_back(T& val)
 	{
@@ -56,4 +59,3 @@ private:
 	uint8_t size_ = 0;
 };
 }
-#endif /* SUNERGIJA_DS_CPP_SRC_UTILS_ARRAY_H_ */
