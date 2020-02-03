@@ -28,8 +28,18 @@ public:
 	T & operator[] (const size_t & index) { return array_[index]; }
     const T & operator[] (const size_t & index) const { return array_[index]; }
 
-	T& at (const size_t & index) { return array_[index]; }
-    const T& at (const size_t & index) const { return array_[index]; }
+	T& at (const size_t & index) { 
+		if (index >= size_) {
+			terminate();
+		}
+		return array_[index]; 
+	}
+    const T& at (const size_t & index) const { 
+		if (index >= size_) {
+			terminate();
+		}
+		return array_[index]; 
+	}
 
 	void push_back(T& val)
 	{
